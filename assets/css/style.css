@@ -79,7 +79,7 @@ h6 {
   z-index: 9997;
   transition: all 0.5s;
   padding: 0 15px;
-  background-image: url('../img/Background\ nav.jpg');
+  background-image: url(../img/backgroundNav.jpg);
   overflow-y: auto;
 }
 
@@ -1071,16 +1071,12 @@ section {
   bottom: 0;
   width: 300px;
   z-index: 9999;
-  
 }
 
 #footer img {
   text-align: center;
 
   width: 100px;
-}
-
-
 }
 
 @media (max-width: 1199px) {
