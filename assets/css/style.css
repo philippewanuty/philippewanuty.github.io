@@ -294,13 +294,10 @@ h6 {
 }
 
 @media (max-width: 768px) {
-  #heroImage {
-   
-    
-  }
+
 
   #main {
-    margin: auto;
+    margin: auto auto 0px auto;
   }
 
   #hero h1 {
@@ -1115,5 +1112,6 @@ section {
   #heroImage {
     height: 450px;
     margin: auto;
+    
   }
 }
