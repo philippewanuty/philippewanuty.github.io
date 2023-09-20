@@ -299,25 +299,7 @@ h6 {
   }
 }
 
-@media (max-width: 768px) {
 
-
-  #main {
-    margin: 0px auto 0px auto;
-  }
-
-  #hero h1 {
-    font-size: 28px;
-    line-height: 36px;
-  }
-
-  #hero p {
-    font-size: 18px;
-    line-height: 24px;
-   
-  }
-
-}
 
 /*--------------------------------------------------------------
 # Sections General
@@ -1124,8 +1106,32 @@ section {
   }
 
   #heroImage {
+    height: 700px;
+    margin: 20px auto auto;
+    
+  }
+}
+@media (max-width: 768px) {
+
+
+  #main {
+    margin: 0px auto 0px auto;
+  }
+
+  #hero h1 {
+    font-size: 28px;
+    line-height: 36px;
+  }
+
+  #hero p {
+    font-size: 18px;
+    line-height: 24px;
+   
+  }
+  #heroImage {
     height: 450px;
     margin: 20px auto auto;
     
   }
+
 }
