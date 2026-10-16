@@ -117,8 +117,28 @@
       scramble(title, "PHILIPPE WANUTY STUDIO");
     }, 1150);
   }
+  // glitch into the Hero portrait, hold it for a moment, glitch back to the mark
+  function faceGlitch(){
+    if (reduce || logo.classList.contains("face-on") || document.body.classList.contains("pane")) return;
+    const hold = 900 + Math.random() * 600;
+    logo.classList.add("glitch");
+    setTimeout(() => logo.classList.add("face-on"), 140);
+    setTimeout(() => logo.classList.remove("glitch"), 300);
+    setTimeout(() => logo.classList.add("glitch"), 300 + hold);
+    setTimeout(() => logo.classList.remove("face-on"), 440 + hold);
+    setTimeout(() => logo.classList.remove("glitch"), 600 + hold);
+  }
+  let firstIdle = true;
   function idle(){
-    setTimeout(() => { Math.random() < .16 ? pane() : minorGlitch(); idle(); }, 2200 + Math.random() * 4200);
+    setTimeout(() => {
+      const r = Math.random();
+      if (firstIdle) faceGlitch();
+      else if (r < .16) pane();
+      else if (r < .34) faceGlitch();
+      else minorGlitch();
+      firstIdle = false;
+      idle();
+    }, 2200 + Math.random() * 4200);
   }
   logo.addEventListener("click", pane);
 
