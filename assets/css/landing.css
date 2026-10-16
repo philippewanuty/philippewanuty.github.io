@@ -1,0 +1,124 @@
+:root{
+  --bg:#000;
+  --silver:#bababa;
+  --edge:#424242;
+  --text:#d6d6d6;
+  --dim:#7a7a7a;
+  --red:#ff2a4d;
+  --cyan:#1fe3ff;
+  --pixel:'Press Start 2P', 'Courier New', monospace;
+  --crt:'VT323', 'Courier New', ui-monospace, monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);color:var(--text);font-family:var(--crt);
+  overflow:hidden;display:flex;align-items:center;justify-content:center;
+  padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);
+}
+
+/* ---------- CRT layers ---------- */
+#noise{position:fixed;inset:0;width:100%;height:100%;image-rendering:pixelated;opacity:.05;pointer-events:none;z-index:1}
+.crt{position:fixed;inset:0;pointer-events:none;z-index:2;
+  background:
+    repeating-linear-gradient(to bottom, rgba(255,255,255,.025) 0 1px, transparent 1px 3px),
+    radial-gradient(ellipse at center, transparent 55%, rgba(0,0,0,.75) 100%);
+}
+
+/* ---------- language switch ---------- */
+.lang{position:fixed;top:calc(env(safe-area-inset-top,0px) + 18px);right:calc(env(safe-area-inset-right,0px) + 18px);display:flex;gap:10px;z-index:10}
+.lang button{
+  width:36px;height:24px;padding:0;border:1px solid var(--edge);background:none;cursor:pointer;
+  filter:grayscale(1) brightness(.7);opacity:.55;transition:filter .2s, opacity .2s, border-color .2s;
+}
+.lang button svg{display:block;width:100%;height:100%}
+.lang button:hover{opacity:.9}
+.lang button[aria-pressed="true"]{filter:none;opacity:1;border-color:var(--silver)}
+.lang button:focus-visible,.mail:focus-visible{outline:2px solid var(--cyan);outline-offset:3px}
+
+/* ---------- main ---------- */
+main{position:relative;z-index:3;display:flex;flex-direction:column;align-items:center;text-align:center;padding:0 20px}
+
+.logo{position:relative;width:min(280px,58vw);aspect-ratio:400/390;cursor:pointer;margin-bottom:clamp(22px,4vh,40px)}
+.logo svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.logo .ch{opacity:0;mix-blend-mode:screen}
+
+.logo .main use{
+  fill:var(--silver);fill-opacity:0;
+  stroke:#f2f2f2;stroke-width:3;stroke-linejoin:miter;
+  stroke-dasharray:1;stroke-dashoffset:1;
+}
+.logo.draw .main use{animation:draw 1.5s cubic-bezier(.65,0,.25,1) forwards}
+.logo.filled .main use{animation:draw 0s forwards, fillIn .6s steps(1) forwards, edge .8s .4s forwards}
+@keyframes draw{to{stroke-dashoffset:0}}
+@keyframes fillIn{0%{fill-opacity:1}15%{fill-opacity:0}30%{fill-opacity:.8}45%{fill-opacity:.1}60%,100%{fill-opacity:1}}
+@keyframes edge{to{stroke:var(--edge)}}
+
+/* scan line passing over the mark */
+.logo .scan{position:absolute;left:-6%;right:-6%;height:2px;top:0;opacity:0;pointer-events:none;
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent)}
+.logo.filled .scan{animation:scan 4.5s 1s linear infinite}
+@keyframes scan{0%{top:0;opacity:0}8%{opacity:.7}85%{opacity:.5}100%{top:100%;opacity:0}}
+
+/* small glitch */
+.logo.glitch .ch{opacity:.9}
+.logo.glitch .ch-r{animation:gR .16s steps(1) infinite}
+.logo.glitch .ch-c{animation:gC .2s steps(1) infinite}
+.logo.glitch .main{animation:gM .18s steps(1) infinite}
+@keyframes gR{
+  0%{transform:translate(-8px,1px);clip-path:inset(6% 0 58% 0)}
+  33%{transform:translate(6px,-2px);clip-path:inset(42% 0 30% 0)}
+  66%{transform:translate(-4px,0);clip-path:inset(72% 0 4% 0)}
+}
+@keyframes gC{
+  0%{transform:translate(7px,-1px);clip-path:inset(30% 0 45% 0)}
+  33%{transform:translate(-6px,2px);clip-path:inset(0 0 75% 0)}
+  66%{transform:translate(5px,1px);clip-path:inset(55% 0 15% 0)}
+}
+@keyframes gM{
+  0%{transform:translate(0,0);clip-path:inset(0)}
+  25%{transform:translate(4px,0) skewX(-4deg);clip-path:inset(0 0 20% 0)}
+  50%{transform:translate(-3px,1px);clip-path:inset(15% 0 0 0)}
+  75%{transform:translate(1px,-1px) skewX(3deg);clip-path:inset(0)}
+}
+
+/* text */
+h1{font-family:var(--pixel);font-weight:400;font-size:clamp(11px,2.3vw,20px);letter-spacing:.06em;line-height:1.6;color:var(--text);min-height:1.6em}
+.tag{font-size:clamp(19px,2.6vw,26px);color:var(--dim);margin-top:10px;min-height:1.2em}
+.tag::after{content:"_";margin-left:2px;animation:blink 1s steps(1) infinite;color:var(--silver)}
+@keyframes blink{50%{opacity:0}}
+
+.mail{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 26px);
+  z-index:3;font-size:clamp(18px,2.2vw,22px);color:var(--dim);text-decoration:none;letter-spacing:.04em;white-space:nowrap}
+.mail:hover{color:var(--text);text-shadow:-2px 0 var(--red),2px 0 var(--cyan)}
+
+.hidden{opacity:0}
+.show{opacity:1;transition:opacity .3s}
+
+/* pane message */
+.pane-msg{position:absolute;top:-38px;left:50%;transform:translateX(-50%);white-space:nowrap;
+  font-family:var(--pixel);font-size:clamp(8px,1.4vw,11px);color:var(--red);opacity:0;pointer-events:none;letter-spacing:.05em}
+
+/* big "pane" */
+body.pane main{animation:shake .1s steps(2) infinite}
+body.pane .pane-msg{opacity:1;animation:blink .25s steps(1) infinite}
+body.pane .logo{filter:contrast(1.4)}
+body.pane h1,body.pane .tag{text-shadow:-3px 0 var(--red),3px 0 var(--cyan)}
+html.flash{filter:invert(1)}
+@keyframes shake{
+  0%{transform:translate(0,0)}25%{transform:translate(-3px,2px)}
+  50%{transform:translate(4px,-1px)}75%{transform:translate(-2px,-2px)}
+}
+
+/* ---------- boot terminal ---------- */
+#boot{position:fixed;inset:0;z-index:20;background:var(--bg);
+  padding:calc(env(safe-area-inset-top,0px) + 28px) 24px;font-size:clamp(17px,2.2vw,22px);color:var(--silver);
+  line-height:1.35;transition:opacity .35s;cursor:pointer}
+#boot .err{color:var(--red)}
+#boot .hint{position:absolute;bottom:calc(env(safe-area-inset-bottom,0px) + 22px);right:24px;color:var(--dim);font-size:16px}
+#boot.out{opacity:0}
+
+@media (prefers-reduced-motion: reduce){
+  .logo .scan, .tag::after{animation:none!important}
+  body.pane main{animation:none}
+}
