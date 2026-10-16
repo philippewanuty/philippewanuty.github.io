@@ -11,7 +11,8 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html,body{height:100%}
-body{
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{height:100dvh;
   background:var(--bg);color:var(--text);font-family:var(--crt);
   overflow:hidden;display:flex;align-items:center;justify-content:center;
   padding:env(safe-area-inset-top,0) env(safe-area-inset-right,0) env(safe-area-inset-bottom,0) env(safe-area-inset-left,0);
@@ -90,7 +91,7 @@ h1{font-family:var(--pixel);font-weight:400;font-size:clamp(11px,2.3vw,20px);let
 
 .mail{position:fixed;left:50%;transform:translateX(-50%);bottom:calc(env(safe-area-inset-bottom,0px) + 26px);
   z-index:3;font-size:clamp(18px,2.2vw,22px);color:var(--dim);text-decoration:none;letter-spacing:.04em;white-space:nowrap}
-.mail:hover{color:var(--text);text-shadow:-2px 0 var(--red),2px 0 var(--cyan)}
+@media (hover:hover){ .mail:hover{color:var(--text);text-shadow:-2px 0 var(--red),2px 0 var(--cyan)} }
 
 .hidden{opacity:0}
 .show{opacity:1;transition:opacity .3s}
@@ -121,4 +122,22 @@ html.flash{filter:invert(1)}
 @media (prefers-reduced-motion: reduce){
   .logo .scan, .tag::after{animation:none!important}
   body.pane main{animation:none}
+}
+
+/* ---------- mobile / older browsers ---------- */
+/* iOS < 14.5 has no `inset`, iOS < 15 has no `aspect-ratio` (logo would collapse to 0 height) */
+#noise,.crt,#boot{top:0;right:0;bottom:0;left:0}
+.logo svg{top:0;left:0}
+@supports not (aspect-ratio:1){
+  .logo{height:calc(min(280px,58vw) * .975)}
+}
+/* short screens (phone in landscape): shrink the mark so the email never overlaps the text */
+@media (max-height:520px){
+  .logo{width:min(280px,58vw,36vh);margin-bottom:12px}
+  .tag{margin-top:4px}
+  .mail{bottom:calc(env(safe-area-inset-bottom,0px) + 10px)}
+  .pane-msg{top:-24px}
+}
+@supports not (aspect-ratio:1){
+  @media (max-height:520px){ .logo{height:calc(min(280px,58vw,36vh) * .975)} }
 }
