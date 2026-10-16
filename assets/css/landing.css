@@ -85,17 +85,15 @@ main{position:relative;z-index:3;display:flex;flex-direction:column;align-items:
 
 /* face glitch: the mark breaks into the Hero portrait and back */
 .logo .face{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;pointer-events:none}
-.logo .face img,.logo .face-ch{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:contain}
-.logo .face-ch{mix-blend-mode:screen;opacity:.6;
-  -webkit-mask:url(../img/Hero.png) center/contain no-repeat;mask:url(../img/Hero.png) center/contain no-repeat}
-.logo .face-r{background:var(--red);transform:translate(-2px,0)}
-.logo .face-c{background:var(--cyan);transform:translate(2px,0)}
+.logo .face-ch{mix-blend-mode:screen;opacity:.6}
+.logo .face-r{transform:translate(-2px,0)}
+.logo .face-c{transform:translate(2px,0)}
 .logo.face-on .face{opacity:1}
 .logo.face-on .ch,.logo.face-on .main{opacity:0}
 .logo.face-on.glitch .face-ch{opacity:.9}
 .logo.face-on.glitch .face-r{animation:gR .16s steps(1) infinite}
 .logo.face-on.glitch .face-c{animation:gC .2s steps(1) infinite}
-.logo.face-on.glitch .face img{animation:gM .18s steps(1) infinite}
+.logo.face-on.glitch .face-main{animation:gM .18s steps(1) infinite}
 
 /* text */
 h1{font-family:var(--pixel);font-weight:400;font-size:clamp(11px,2.3vw,20px);letter-spacing:.06em;line-height:1.6;color:var(--text);min-height:1.6em}
