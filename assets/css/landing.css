@@ -153,3 +153,16 @@ html.flash{filter:invert(1)}
 @supports not (aspect-ratio:1){
   @media (max-height:520px){ .logo{height:calc(min(280px,58vw,36vh) * .975)} }
 }
+
+/* ---------- terminal vs. email on small screens ---------- */
+/* phones / tablets: prompt takes the bottom row (terminal.css), email sits right above it */
+@media (max-width:900px){
+  .mail{bottom:calc(env(safe-area-inset-bottom,0px) + 72px)}
+}
+/* phone lying down: not enough height, so prompt bottom-left and email bottom-right */
+@media (max-width:900px) and (max-height:520px){
+  /* "body" so these beat terminal.css, which loads after this file */
+  body .term{bottom:calc(env(safe-area-inset-bottom,0px) + 10px)}
+  body .term-line{width:min(280px,44vw)}
+  .mail{left:auto;right:calc(env(safe-area-inset-right,0px) + 16px);transform:none;bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+}

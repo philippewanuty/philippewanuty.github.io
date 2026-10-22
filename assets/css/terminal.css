@@ -1,0 +1,42 @@
+/* ---------- command prompt (bottom-left), shared by every page ---------- */
+.term{position:fixed;z-index:6;
+  left:calc(env(safe-area-inset-left,0px) + 20px);bottom:calc(env(safe-area-inset-bottom,0px) + 20px);
+  max-width:calc(100vw - 40px);font-family:var(--crt);font-size:20px;color:var(--silver)}
+.term.hidden{opacity:0;pointer-events:none}
+
+/* messages float above the prompt (over whatever is there) instead of pushing it */
+.term-out{position:absolute;left:0;bottom:100%;width:max-content;max-width:calc(100vw - 32px);
+  display:flex;flex-direction:column;align-items:flex-start;gap:2px;padding-bottom:6px;font-size:18px;line-height:1.15;pointer-events:none}
+.term-out div{opacity:1;transition:opacity .6s;background:#000;padding:1px 6px}
+.term-out div.gone{opacity:0}
+.term-out .err{color:var(--red);text-shadow:-1px 0 var(--cyan)}
+.term-out .ok{color:var(--cyan)}
+.term-out .hint{color:var(--dim)}
+
+.term-line{position:relative;display:flex;align-items:baseline;gap:8px;
+  width:min(320px,calc(100vw - 40px));padding:5px 10px;
+  border:1px solid var(--edge);background:rgba(0,0,0,.9);cursor:text;transition:border-color .2s}
+.term-line:hover{border-color:#5e5e5e}
+.term-line:focus-within{border-color:var(--silver);outline:2px solid var(--cyan);outline-offset:3px}
+.term-prompt{color:var(--dim);flex:none}
+.term-view{flex:1;min-width:0;white-space:pre;overflow:hidden;color:var(--text)}
+.term-cur{display:inline-block;animation:blink 1s steps(1) infinite}
+.term-ph{color:var(--dim);margin-left:2px}
+/* the real <input> sits invisible on top of the line: we draw our own text + cursor */
+.term input{position:absolute;top:0;left:0;width:100%;height:100%;opacity:0;border:0;padding:0;
+  font:inherit;font-size:20px;background:none;color:transparent;caret-color:transparent}
+
+.term.shake .term-line{animation:termShake .08s steps(2) 4;border-color:var(--red)}
+@keyframes termShake{0%{transform:translate(0,0)}25%{transform:translate(-4px,1px)}50%{transform:translate(4px,-1px)}75%{transform:translate(-2px,0)}}
+@keyframes blink{50%{opacity:0}}
+
+/* phones / tablets: the prompt becomes a full-width bar along the bottom */
+@media (max-width:900px){
+  .term{left:calc(env(safe-area-inset-left,0px) + 16px);bottom:calc(env(safe-area-inset-bottom,0px) + 16px)}
+  .term-line{width:calc(100vw - 32px - env(safe-area-inset-left,0px) - env(safe-area-inset-right,0px))}
+}
+
+@media (prefers-reduced-motion: reduce){
+  .term-cur{animation:none}
+  .term.shake .term-line{animation:none}
+}

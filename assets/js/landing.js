@@ -141,6 +141,9 @@
     }, 2200 + Math.random() * 4200);
   }
   logo.addEventListener("click", pane);
+  // the bottom-left terminal asks for a glitch on wrong / right codes
+  document.addEventListener("pw:glitch", e => e.detail.big ? pane() : minorGlitch());
+  const term = $("term");
 
   /* ---------- reveal ---------- */
   async function reveal(){
@@ -148,7 +151,7 @@
     if (reduce){
       logo.classList.add("filled");
       tag.textContent = T[lang].tag;
-      [title, tag, mail].forEach(e => e.classList.replace("hidden", "show"));
+      [title, tag, mail, term].forEach(e => e.classList.replace("hidden", "show"));
       return;
     }
     logo.classList.add("draw");
@@ -164,6 +167,7 @@
     scramble(tag, T[lang].tag);
     await sleep(600);
     mail.classList.replace("hidden", "show");
+    term.classList.replace("hidden", "show");
     idle();
   }
 

@@ -9,9 +9,10 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="assets/css/landing.css">
+<link rel="stylesheet" href="assets/css/terminal.css">
 <link rel="preload" as="image" href="assets/img/Hero.png">
 </head>
-<body>
+<body data-page="home">
 
 <canvas id="noise" aria-hidden="true"></canvas>
 <div class="crt" aria-hidden="true"></div>
@@ -80,9 +81,18 @@
 </main>
 
 <a class="mail hidden" id="mail" href="mailto:contact@philippewanuty.com">contact@philippewanuty.com</a>
+<form class="term hidden" id="term" autocomplete="off">
+  <div class="term-out" aria-live="polite"></div>
+  <label class="term-line">
+    <span class="term-prompt">C:\PW&gt;</span>
+    <span class="term-view" aria-hidden="true"><span class="term-text"></span><span class="term-cur">_</span><span class="term-ph"></span></span>
+    <input type="text" name="code" maxlength="28" spellcheck="false" autocapitalize="off" autocorrect="off" autocomplete="off" enterkeyhint="go">
+  </label>
+</form>
 
 <div id="boot" aria-hidden="true"><div id="bootLines"></div><div class="hint" id="bootHint"></div></div>
 
 <script src="assets/js/landing.js" defer></script>
+<script src="assets/js/terminal.js" defer></script>
 </body>
 </html>
